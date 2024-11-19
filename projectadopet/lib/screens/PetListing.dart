@@ -39,95 +39,98 @@ class PetList extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Row(
-                  children: [
-                    // Image du chien
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        dog.image,
-                        width: 130,
-                        height: 130,
-                        fit: BoxFit.cover,
+                child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 10), 
+                  child: Row(
+                    children: [
+                      // Image du chien
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          dog.image,
+                          width: 130,
+                          height: 130,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 20),
-                    // Détails du chien
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      SizedBox(width: 20),
+                      // Détails du chien
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              dog.name,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              '${dog.age} yrs | Playful',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 18,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  '381m away',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Genre et temps
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            dog.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: dog.gender == 'Male'
+                                  ? Colors.blue
+                                  : Colors.pinkAccent,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            child: Text(
+                              dog.gender,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 20),
                           Text(
-                            '${dog.age} yrs | Playful',
+                            '12 min ago',
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                size: 18,
-                                color: Colors.red,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                '381m away',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Genre et temps
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: dog.gender == 'Male'
-                                ? Colors.blue
-                                : Colors.pinkAccent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Text(
-                            dog.gender,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          '12 min ago',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
