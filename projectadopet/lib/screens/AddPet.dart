@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io'; 
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
   Uint8List? _webImageBytes;
 
   final picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    ownerIdController.text = '675242673054e416f8cb0194'; 
+  }
+
   Future<void> _pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -52,7 +59,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
         'weight': double.tryParse(weightController.text) ?? 0.0,
         'distance': distanceController.text,
         'description': descriptionController.text,
-        'ownerId': ownerIdController.text,
+        'ownerId': ownerIdController.text, 
       };
 
       try {
@@ -74,6 +81,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add a Dog"),
+        backgroundColor: Color(0xFF80C4E9), 
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -82,46 +90,138 @@ class _AddDogScreenState extends State<AddDogScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // Nom du chien
                 TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: "Name"),
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                    prefixIcon: Icon(Icons.pets, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],  
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1),
+                    ),
+                  ),
                   validator: (value) => value!.isEmpty ? "Enter a name" : null,
                 ),
+                SizedBox(height: 10),
+
+                
                 TextFormField(
                   controller: ageController,
-                  decoration: InputDecoration(labelText: "Age"),
+                  decoration: InputDecoration(
+                    labelText: "Age",
+                    prefixIcon: Icon(Icons.calendar_today, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],  // Fond brun
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1), 
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                   validator: (value) => value!.isEmpty ? "Enter age" : null,
                 ),
+                SizedBox(height: 10),
+
+               
                 TextFormField(
                   controller: genderController,
-                  decoration: InputDecoration(labelText: "Gender"),
+                  decoration: InputDecoration(
+                    labelText: "Gender",
+                    prefixIcon: Icon(Icons.accessibility, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1),
+                    ),
+                  ),
                 ),
+                SizedBox(height: 10),
+
+               
                 TextFormField(
                   controller: colorController,
-                  decoration: InputDecoration(labelText: "Color"),
+                  decoration: InputDecoration(
+                    labelText: "Color",
+                    prefixIcon: Icon(Icons.color_lens, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1),
+                    ),
+                  ),
                 ),
+                SizedBox(height: 10),
+
+          
                 TextFormField(
                   controller: weightController,
-                  decoration: InputDecoration(labelText: "Weight"),
+                  decoration: InputDecoration(
+                    labelText: "Weight",
+                    prefixIcon: Icon(Icons.scale, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1), 
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                 ),
+                SizedBox(height: 10),
+
+                
                 TextFormField(
                   controller: distanceController,
-                  decoration: InputDecoration(labelText: "Distance"),
+                  decoration: InputDecoration(
+                    labelText: "Distance",
+                    prefixIcon: Icon(Icons.location_on, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1), 
+                    ),
+                  ),
                 ),
+                SizedBox(height: 10),
+
+               
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(labelText: "Description"),
+                  decoration: InputDecoration(
+                    labelText: "Description",
+                    prefixIcon: Icon(Icons.description, color: Colors.brown),
+                    filled: true,
+                    fillColor: Colors.brown[50],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown, width: 1), 
+                    ),
+                  ),
                   maxLines: 3,
                 ),
-                TextFormField(
-                  controller: ownerIdController,
-                  decoration: InputDecoration(labelText: "Owner ID"),
-                ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
 
-                // Sélectionner une image
+                
                 GestureDetector(
                   onTap: _pickImage,
                   child: _webImageBytes != null || _selectedImage != null
@@ -146,9 +246,18 @@ class _AddDogScreenState extends State<AddDogScreen> {
                         ),
                 ),
                 SizedBox(height: 20),
+
+              
                 ElevatedButton(
                   onPressed: _submitForm,
-                  child: Text("Add Dog"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF80C4E9),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  ),
+                  child: Text(
+                    "Add Dog",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
                 ),
               ],
             ),

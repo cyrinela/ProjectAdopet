@@ -25,3 +25,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/signup.png
+    - assets/signin.png
+

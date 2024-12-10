@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/PetListing.dart'; // L'écran de la liste des animaux
-import 'screens/Authentification.dart'; // L'écran d'authentification
-import 'screens/SignupScreen.dart'; // L'écran d'inscription
+import 'screens/Authentification.dart'; 
+import 'screens/SignupScreen.dart'; 
 import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/auth', // La route initiale
+      initialRoute: '/auth', 
       routes: {
-        '/auth': (context) => SignInScreen(), // Écran d'authentification
-        '/home': (context) => PetList(), // Écran de la liste des animaux
-        '/signup': (context) => SignUpPage(), // Écran pour l'inscription
+        '/auth': (context) => SignInScreen(), 
+        '/home': (context) => PetList(),
+        '/signup': (context) => SignUpPage(),
       },
     );
   }

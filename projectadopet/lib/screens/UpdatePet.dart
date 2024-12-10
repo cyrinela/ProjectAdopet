@@ -90,8 +90,8 @@ class _EditPetPageState extends State<EditPetPage> {
   Future<void> _updateDog() async {
     try {
       if (_nameController.text.isEmpty || _ageController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Name and Age are required")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Name and Age are required")));
         return;
       }
 
@@ -110,11 +110,12 @@ class _EditPetPageState extends State<EditPetPage> {
         'ownerId': ownerId,
       };
 
-      await ApiService.updateDog(widget.dogId, dogData, _selectedImage, _webImageBytes);
+      await ApiService.updateDog(
+          widget.dogId, dogData, _selectedImage, _webImageBytes);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Dog updated successfully")));
 
-      // Retour à la page précédente avec un signal pour rafraîchir
+    
       Navigator.pop(context, true);
     } catch (e) {
       ScaffoldMessenger.of(context)
@@ -126,8 +127,9 @@ class _EditPetPageState extends State<EditPetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Dog'),
+        title: Text('Update Pet'),
         centerTitle: true,
+        backgroundColor: Color(0xFF80C4E9), 
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -137,53 +139,61 @@ class _EditPetPageState extends State<EditPetPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Edit Dog ID: ${widget.dogId}',
-                      style: TextStyle(fontSize: 18),
+                    SizedBox(height: 16),
+                    Center(
+                      child: GestureDetector(
+                        onTap: _pickImage,
+                        child: _selectedImage != null
+                            ? Image.file(
+                                _selectedImage!,
+                                width: 100, 
+                                height: 100, 
+                                fit: BoxFit.cover,
+                              )
+                            : _webImageBytes != null
+                                ? Image.memory(
+                                    _webImageBytes!,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  )
+                                : _imageUrl.isNotEmpty
+                                    ? Image.network(
+                                        'http://localhost:3000/${_imageUrl}', 
+                                        width: 100, 
+                                        height: 100, 
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Container(
+                                        width: 100, 
+                                        height: 100, 
+                                        color: Colors.grey[300],
+                                        child: Icon(Icons.camera_alt),
+                                      ),
+                      ),
                     ),
                     SizedBox(height: 16),
-                    GestureDetector(
-                      onTap: _pickImage,
-                      child: _selectedImage != null
-                          ? Image.file(
-                              _selectedImage!,
-                              width: 130,
-                              height: 130,
-                              fit: BoxFit.cover,
-                            )
-                          : _webImageBytes != null
-                              ? Image.memory(
-                                  _webImageBytes!,
-                                  width: 130,
-                                  height: 130,
-                                  fit: BoxFit.cover,
-                                )
-                              : _imageUrl.isNotEmpty
-                                  ? Image.network(
-                                      'http://localhost:3000/${_imageUrl}', // Utiliser l'URL complète ici
-                                      width: 130,
-                                      height: 130,
-                                      fit: BoxFit.cover,  // Ajustement de l'image
-                                    )
-                                  : Container(
-                                      width: 130,
-                                      height: 130,
-                                      color: Colors.grey[300],
-                                      child: Icon(Icons.camera_alt),
-                                    ),
-                    ),
-                    SizedBox(height: 16),
-                    _buildTextField('Name', _nameController),
-                    _buildTextField('Age', _ageController, isNumeric: true),
-                    _buildTextField('Gender', _genderController),
-                    _buildTextField('Color', _colorController),
-                    _buildTextField('Weight', _weightController, isNumeric: true),
-                    _buildTextField('Distance', _distanceController),
-                    _buildTextField('Description', _descriptionController),
+                    _buildTextField('Name', _nameController, icon: Icons.pets),
+                    _buildTextField('Age', _ageController, isNumeric: true, icon: Icons.calendar_today),
+                    _buildTextField('Gender', _genderController, icon: Icons.male),
+                    _buildTextField('Color', _colorController, icon: Icons.color_lens),
+                    _buildTextField('Weight', _weightController, isNumeric: true, icon: Icons.fitness_center),
+                    _buildTextField('Distance', _distanceController, icon: Icons.location_on),
+                    _buildTextField('Description', _descriptionController, icon: Icons.description),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _updateDog,
-                      child: Text('Save'),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _updateDog,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF80C4E9), 
+                          minimumSize: Size(180, 40), 
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Text('Save',
+                            style: TextStyle(color: Colors.brown[800], fontSize: 14, fontWeight: FontWeight.bold)), 
+                      ),
                     ),
                   ],
                 ),
@@ -193,16 +203,28 @@ class _EditPetPageState extends State<EditPetPage> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller,
-      {bool isNumeric = false}) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(labelText: label),
-      keyboardType: isNumeric
-          ? TextInputType.numberWithOptions(decimal: true)
-          : TextInputType.text,
-      inputFormatters: isNumeric
-          ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))]
-          : [],
+      {bool isNumeric = false, IconData? icon}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0), 
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.brown[800]), 
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.brown[800]!, width: 2),
+          ),
+          prefixIcon: icon != null ? Icon(icon, color: Colors.brown[800]) : null,
+          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+        ),
+        style: TextStyle(color: Colors.brown[800]),
+        keyboardType: isNumeric
+            ? TextInputType.numberWithOptions(decimal: true)
+            : TextInputType.text,
+        inputFormatters: isNumeric
+            ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))]
+            : [],
+      ),
     );
   }
 }

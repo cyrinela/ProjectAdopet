@@ -15,7 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void _signUp() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true;  // Affiche le loader
+        _isLoading = true;
       });
 
       try {
@@ -24,25 +24,22 @@ class _SignUpPageState extends State<SignUpPage> {
           password: _passwordController.text,
         );
 
-        // Affichage du message d'inscription réussie avec un SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Inscription réussie ! Bienvenue ${credential.user?.email}")),
+          SnackBar(content: Text("Sign up successful! Welcome ${credential.user?.email}")),
         );
 
-        // Affichage du message de succès avec un AlertDialog
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Inscription réussie !"),
-              content: Text("Bienvenue ${credential.user?.email}"),
+              title: Text("Sign up successful!"),
+              content: Text("Welcome ${credential.user?.email}"),
               actions: <Widget>[
                 TextButton(
                   child: Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    // Redirection vers la page d'accueil après inscription
-                    Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/auth');
                   },
                 ),
               ],
@@ -50,22 +47,22 @@ class _SignUpPageState extends State<SignUpPage> {
           },
         );
       } on FirebaseAuthException catch (e) {
-        String errorMessage = "Erreur inconnue";
+        String errorMessage = "Unknown error";
         if (e.code == 'weak-password') {
-          errorMessage = "Le mot de passe fourni est trop faible.";
+          errorMessage = "The password provided is too weak.";
         } else if (e.code == 'email-already-in-use') {
-          errorMessage = "Un compte existe déjà pour cet email.";
+          errorMessage = "An account already exists for this email.";
         }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(errorMessage)),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur : $e")),
+          SnackBar(content: Text("Error: $e")),
         );
       } finally {
         setState(() {
-          _isLoading = false;  // Cache le loader
+          _isLoading = false;
         });
       }
     }
@@ -73,11 +70,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return "Veuillez entrer votre email";
+      return "Please enter your email";
     }
     final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
     if (!emailRegex.hasMatch(value)) {
-      return "Veuillez entrer une adresse email valide";
+      return "Please enter a valid email address";
     }
     return null;
   }
@@ -85,57 +82,138 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Sign Up"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: _validateEmail,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/signup.png'),
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: "Mot de passe",
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Veuillez entrer votre mot de passe";
-                  }
-                  if (value.length < 6) {
-                    return "Le mot de passe doit contenir au moins 6 caractères.";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 24),
-              _isLoading
-                  ? CircularProgressIndicator() // Afficher un loader pendant le traitement
-                  : ElevatedButton(
-                      onPressed: _signUp,
-                      child: Text("S'inscrire"),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                      ),
-                    ),
-            ],
+            ),
           ),
-        ),
+          // Form
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 50),
+                  Icon(
+                    Icons.pets,
+                    size: 60,
+                    color: Colors.brown,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Join us to adopt!",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 30),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: Colors.brown),
+                            prefixIcon: Icon(Icons.email, color: Colors.brown),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown, width: 2),
+                            ),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: _validateEmail,
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.brown),
+                            prefixIcon: Icon(Icons.lock, color: Colors.brown),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.brown, width: 2),
+                            ),
+                          ),
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your password";
+                            }
+                            if (value.length < 6) {
+                              return "Password must be at least 6 characters long.";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        _isLoading
+                            ? CircularProgressIndicator()
+                            : ElevatedButton(
+                                onPressed: _signUp,
+                                child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white, backgroundColor: Colors.brown,
+                                  minimumSize: Size(150, 36),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                        SizedBox(height: 10),
+
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/auth');
+                          },
+                          child: Text(
+                            "Already have an account? Log in",
+                            style: TextStyle(color: Colors.brown),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

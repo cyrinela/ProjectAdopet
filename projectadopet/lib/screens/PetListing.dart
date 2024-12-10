@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/dog.dart';
 import '../services/ApiService.dart';
 import 'PetDetails.dart';
-import './AddPet.dart'; // Importer l'écran AddPetScreen
+import './AddPet.dart'; 
 
 class PetList extends StatefulWidget {
   @override
@@ -15,10 +15,10 @@ class _PetListState extends State<PetList> {
   @override
   void initState() {
     super.initState();
-    dogsFuture = ApiService.fetchDogs(); // Récupérer la liste des chiens
+    dogsFuture = ApiService.fetchDogs();
   }
 
-  // Appeler cette méthode pour actualiser la liste après l'ajout d'un chien
+
   void refreshList() {
     setState(() {
       dogsFuture = ApiService.fetchDogs();
@@ -29,13 +29,22 @@ class _PetListState extends State<PetList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Liste des Chiens'),
+        title: Center(
+          child: Text(
+            'Our Little Friends',  
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+        ),
+        backgroundColor: Color(0xFF80C4E9),  
         actions: [
           IconButton(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.exit_to_app), 
             onPressed: () {
-              // Naviguer vers l'écran d'accueil (/home)
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, '/auth');
             },
           ),
         ],
@@ -59,8 +68,7 @@ class _PetListState extends State<PetList> {
               itemBuilder: (context, index) {
                 final dog = dogs[index];
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -70,7 +78,7 @@ class _PetListState extends State<PetList> {
                         ),
                       ).then((refresh) {
                         if (refresh != null && refresh) {
-                          refreshList(); // Rafraîchir la liste si nécessaire
+                          refreshList(); 
                         }
                       });
                     },
@@ -81,9 +89,9 @@ class _PetListState extends State<PetList> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 6,
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 10,
                             offset: Offset(0, 3),
                           ),
                         ],
@@ -117,14 +125,15 @@ class _PetListState extends State<PetList> {
                                     dog.name,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 22,
+                                      color: Color(0xFF6F4F29),  // Couleur marron pour le texte
                                     ),
                                   ),
                                   SizedBox(height: 8),
                                   Text(
                                     '${dog.age} ans | Joueur',
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      color: Color(0xFF6F4F29),  
                                       fontSize: 16,
                                     ),
                                   ),
@@ -140,7 +149,7 @@ class _PetListState extends State<PetList> {
                                       Text(
                                         '${dog.distance} km away',
                                         style: TextStyle(
-                                          color: Colors.grey,
+                                          color: Color(0xFF6F4F29), 
                                           fontSize: 14,
                                         ),
                                       ),
@@ -175,7 +184,7 @@ class _PetListState extends State<PetList> {
                                 Text(
                                   '12 min ago',
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Color(0xFF6F4F29),  
                                     fontSize: 14,
                                   ),
                                 ),
@@ -204,7 +213,7 @@ class _PetListState extends State<PetList> {
           });
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF80C4E9),
       ),
     );
   }

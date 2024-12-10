@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/dog.dart';
-import 'UpdatePet.dart'; // Assurez-vous d'importer votre page d'édition
-import '../services/ApiService.dart'; // Assurez-vous d'importer votre service API
+import 'UpdatePet.dart';
+import '../services/ApiService.dart'; 
 
 class DogDetails extends StatefulWidget {
   final Dog dog;
@@ -18,19 +18,16 @@ class _DogDetailsState extends State<DogDetails> {
   @override
   void initState() {
     super.initState();
-    _dog = widget.dog; // Initialise avec les données du chien passé
+    _dog = widget.dog;
   }
 
-  // Rafraîchir les détails du chien
   Future<void> _refreshDogDetails(BuildContext context) async {
     try {
-      Dog updatedDog = await ApiService.fetchDogById(_dog.id); // Remplacez par votre méthode d'appel API
+      Dog updatedDog = await ApiService.fetchDogById(_dog.id);
       setState(() {
-        _dog = updatedDog; // Mettez à jour l'objet chien avec les nouvelles données
+        _dog = updatedDog;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Chien actualisé avec succès!')),
-      );
+    
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erreur lors de l\'actualisation des données.')),
@@ -41,11 +38,11 @@ class _DogDetailsState extends State<DogDetails> {
   // Supprimer le chien
   Future<void> _deleteDog(BuildContext context) async {
     try {
-      await ApiService.deleteDog(_dog.id); // Appel à l'API pour supprimer le chien
+      await ApiService.deleteDog(_dog.id); 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Chien supprimé avec succès!')),
       );
-      Navigator.pop(context); // Retourner à la page précédente après suppression
+      Navigator.pop(context, true); 
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erreur lors de la suppression du chien.')),
@@ -60,21 +57,19 @@ class _DogDetailsState extends State<DogDetails> {
         title: Text(_dog.name),
         centerTitle: true,
         actions: [
-          // Icône pour éditer le chien
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditPetPage(dogId: _dog.id), // Passe l'ID du chien à la page d'édition
+                  builder: (context) => EditPetPage(dogId: _dog.id), 
                 ),
               ).then((_) {
-                _refreshDogDetails(context); // Rafraîchir les détails après modification
+                _refreshDogDetails(context); 
               });
             },
           ),
-          // Icône pour supprimer le chien
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () => _deleteDog(context),
@@ -82,7 +77,7 @@ class _DogDetailsState extends State<DogDetails> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => _refreshDogDetails(context), // Action de rafraîchissement
+        onRefresh: () => _refreshDogDetails(context), 
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,8 +118,9 @@ class _DogDetailsState extends State<DogDetails> {
                             Text(
                               _dog.name,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
                                 fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.brown,
                               ),
                             ),
                             SizedBox(height: 8),
@@ -132,14 +128,14 @@ class _DogDetailsState extends State<DogDetails> {
                               children: [
                                 Icon(
                                   Icons.location_on,
-                                  color: Colors.red,
+                                  color: Colors.blue,
                                   size: 20,
                                 ),
                                 SizedBox(width: 5),
                                 Text(
                                   _dog.distance,
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -169,7 +165,7 @@ class _DogDetailsState extends State<DogDetails> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: _dog.gender == 'Male' ? Colors.blue : Colors.pinkAccent,
+                            color: _dog.gender == 'Male' ? Colors.blue : Colors.pink,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -189,6 +185,7 @@ class _DogDetailsState extends State<DogDetails> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: Colors.brown, 
                       ),
                     ),
                     SizedBox(height: 10),
@@ -196,7 +193,7 @@ class _DogDetailsState extends State<DogDetails> {
                       _dog.description,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.grey[700],
+                        color: Colors.black,
                       ),
                     ),
                     SizedBox(height: 20),
@@ -205,6 +202,7 @@ class _DogDetailsState extends State<DogDetails> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: Colors.brown, 
                       ),
                     ),
                     SizedBox(height: 10),
