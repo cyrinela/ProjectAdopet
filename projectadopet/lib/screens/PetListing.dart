@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/dog.dart';
 import '../services/ApiService.dart';
 import 'PetDetails.dart';
-import './AddPet.dart'; 
+import './AddPet.dart';
 
 class PetList extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _PetListState extends State<PetList> {
     dogsFuture = ApiService.fetchDogs();
   }
 
-
+  // Méthode de rafraîchissement de la liste des chiens
   void refreshList() {
     setState(() {
       dogsFuture = ApiService.fetchDogs();
@@ -31,7 +31,7 @@ class _PetListState extends State<PetList> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Our Little Friends',  
+            'Our Little Friends',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -39,10 +39,10 @@ class _PetListState extends State<PetList> {
             ),
           ),
         ),
-        backgroundColor: Color(0xFF80C4E9),  
+        backgroundColor: Color(0xFF80C4E9),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app), 
+            icon: Icon(Icons.exit_to_app),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/auth');
             },
@@ -56,11 +56,54 @@ class _PetListState extends State<PetList> {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(
-                child: Text(
-                    'Erreur lors de la récupération des chiens : ${snapshot.error}'));
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 80,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Une erreur est survenue lors de la récupération des chiens.',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '${snapshot.error}', // Affiche le message d'erreur détaillé
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Relancer la récupération des données
+                      refreshList();
+                    },
+                    icon: Icon(Icons.refresh),
+                    label: Text('Réessayer'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF80C4E9),
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-                child: Text('Aucun chien disponible pour le moment.'));
+              child: Text(
+                'Aucun chien disponible pour le moment.',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            );
           } else {
             final dogs = snapshot.data!;
             return ListView.builder(
@@ -71,15 +114,15 @@ class _PetListState extends State<PetList> {
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                   child: GestureDetector(
                     onTap: () {
+                      // Navigation vers PetDetails
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DogDetails(dog: dog),
                         ),
-                      ).then((refresh) {
-                        if (refresh != null && refresh) {
-                          refreshList(); 
-                        }
+                      ).then((_) {
+                        // Rafraîchir après avoir ajouté un chien
+                        refreshList();
                       });
                     },
                     child: Container(
@@ -126,14 +169,14 @@ class _PetListState extends State<PetList> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
-                                      color: Color(0xFF6F4F29),  // Couleur marron pour le texte
+                                      color: Color(0xFF6F4F29),
                                     ),
                                   ),
                                   SizedBox(height: 8),
                                   Text(
                                     '${dog.age} ans | Joueur',
                                     style: TextStyle(
-                                      color: Color(0xFF6F4F29),  
+                                      color: Color(0xFF6F4F29),
                                       fontSize: 16,
                                     ),
                                   ),
@@ -149,7 +192,7 @@ class _PetListState extends State<PetList> {
                                       Text(
                                         '${dog.distance} km away',
                                         style: TextStyle(
-                                          color: Color(0xFF6F4F29), 
+                                          color: Color(0xFF6F4F29),
                                           fontSize: 14,
                                         ),
                                       ),
@@ -184,7 +227,7 @@ class _PetListState extends State<PetList> {
                                 Text(
                                   '12 min ago',
                                   style: TextStyle(
-                                    color: Color(0xFF6F4F29),  
+                                    color: Color(0xFF6F4F29),
                                     fontSize: 14,
                                   ),
                                 ),
@@ -203,12 +246,14 @@ class _PetListState extends State<PetList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Navigation vers AddDogScreen
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddDogScreen(),
             ),
           ).then((_) {
+            // Rafraîchir après avoir ajouté un chien
             refreshList();
           });
         },

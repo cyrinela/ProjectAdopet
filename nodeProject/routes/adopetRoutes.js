@@ -42,7 +42,6 @@ const upload = multer({
         }
     }
 });
-
 // Route pour ajouter un chien
 router.post('/add', upload.single('image'), async (req, res) => {
     try {
@@ -50,16 +49,10 @@ router.post('/add', upload.single('image'), async (req, res) => {
             return res.status(400).json({ message: 'No image uploaded' });
         }
 
-        const { name, age, gender, color, weight, distance, description, ownerId } = req.body;
+        const { name, age, gender, color, weight, distance, description } = req.body;
         const imagePath = req.file.path; // Chemin de l'image sauvegardée
 
-        // Vérifier si le propriétaire existe
-        const owner = await Owner.findById(ownerId);
-        if (!owner) {
-            return res.status(404).json({ message: 'Owner not found' });
-        }
-
-        // Créer un nouveau chien
+        // Créer un nouveau chien sans propriétaire
         const newDog = new Dog({
             name,
             age,
@@ -68,7 +61,6 @@ router.post('/add', upload.single('image'), async (req, res) => {
             weight,
             distance,
             description,
-            owner: owner._id,
             imagePath, // Chemin de l'image
         });
 
@@ -82,26 +74,37 @@ router.post('/add', upload.single('image'), async (req, res) => {
     }
 });
 
+
 // Obtenir tous les chiens avec les informations du propriétaire
 router.get('/dogs', async (req, res) => {
     try {
-        const dogs = await Dog.find().populate('owner');  // Remplir les données du propriétaire
-        res.status(200).json(dogs);
+        // Récupérer les chiens sans inclure les données du propriétaire
+        const dogs = await Dog.find();
+
+        if (!dogs || dogs.length === 0) {
+            // Retourner une réponse vide avec un message explicatif
+            return res.status(200).json({ message: 'Aucun chien trouvé.', data: [] });
+        }
+
+        res.status(200).json(dogs); // Retourner les chiens si présents
+    } catch (err) {
+        // Gestion d'erreur avec un message structuré
+        console.error('Erreur lors de la récupération des chiens :', err);
+        res.status(500).json({ error: 'Erreur interne du serveur', details: err.message });
+    }
+});
+
+// Obtenir un chien spécifique avec ses informations sans inclure owner
+router.get('/dog/:id', async (req, res) => {
+    try {
+        const dog = await Dog.findById(req.params.id); // Pas de populate ici
+        if (!dog) return res.status(404).json({ error: 'Dog not found' });
+        res.status(200).json(dog); // Retourner les informations du chien sans owner
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-// Obtenir un chien spécifique avec ses informations
-router.get('/dog/:id', async (req, res) => {
-    try {
-        const dog = await Dog.findById(req.params.id).populate('owner');
-        if (!dog) return res.status(404).json({ error: 'Dog not found' });
-        res.status(200).json(dog);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 // Mise à jour d'un chien
 router.put('/update/:id', upload.single('image'), async (req, res) => {
@@ -130,7 +133,7 @@ router.put('/update/:id', upload.single('image'), async (req, res) => {
             dogId,
             updateData,
             { new: true } // Retourner le chien mis à jour
-        ).populate('owner'); // Si vous voulez encore obtenir le propriétaire, vous pouvez garder cette ligne
+        );
 
         // Vérifier si le chien a bien été trouvé et mis à jour
         if (!updatedDog) {
