@@ -52,26 +52,44 @@ class ApiService {
     }
   }
 
-  // Fonction pour récupérer les chiens
-  static Future<List<Dog>> fetchDogs({String url = '/dogs'}) async {
-    try {
-      final response = await http.get(Uri.parse(baseApiUrl + url));
+ static Future<List<Dog>> fetchDogs({String url = '/dogs'}) async {
+  try {
+    final response = await http.get(Uri.parse(baseApiUrl + url));
 
-      if (response.statusCode == 200) {
-        if (response.body.isEmpty || response.body == 'null') {
+    if (response.statusCode == 200) {
+      // Afficher la réponse brute pour déboguer
+      print('Réponse brute : ${response.body}');
+
+      // Si la réponse contient un message indiquant qu'il n'y a pas de chiens
+      var responseJson = json.decode(response.body);
+
+      // Vérifier si la réponse contient un champ 'message' indiquant "Aucun chien trouvé"
+      if (responseJson is Map && responseJson.containsKey('message') && responseJson['message'] == "Aucun chien trouvé.") {
+        print('Aucun chien trouvé.');
+        return []; // Retourner une liste vide si aucun chien trouvé
+      }
+
+      // Si la réponse est une liste de chiens
+      if (responseJson is List) {
+        // Si la liste est vide, afficher un message et renvoyer une liste vide
+        if (responseJson.isEmpty) {
+          print('Aucun chien trouvé.');
           return [];
         }
 
-        List<dynamic> data = json.decode(response.body);
-        return data.map((dogJson) => Dog.fromJson(dogJson)).toList();
+        // Mapper chaque élément de la liste en un objet Dog
+        return responseJson.map((dogJson) => Dog.fromJson(dogJson)).toList();
       } else {
-        throw Exception('Erreur lors de la récupération des chiens');
+        throw Exception('Structure de réponse inattendue');
       }
-    } catch (e) {
-      print('Erreur lors de la récupération des chiens : $e');
-      throw Exception('Erreur lors de la récupération des chiens : $e');
+    } else {
+      throw Exception('Erreur lors de la récupération des chiens');
     }
+  } catch (e) {
+    print('Erreur lors de la récupération des chiens : $e');
+    throw Exception(e.toString());  // Propagation du message d'erreur
   }
+}
 
   // Fonction pour mettre à jour un chien
   static Future<void> updateDog(

@@ -121,7 +121,6 @@ class _PetListState extends State<PetList> {
                           builder: (context) => DogDetails(dog: dog),
                         ),
                       ).then((_) {
-                        // Rafraîchir après avoir ajouté un chien
                         refreshList();
                       });
                     },
