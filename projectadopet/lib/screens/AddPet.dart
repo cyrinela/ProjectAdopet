@@ -19,18 +19,11 @@ class _AddDogScreenState extends State<AddDogScreen> {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController distanceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController ownerIdController = TextEditingController();
 
   File? _selectedImage;
   Uint8List? _webImageBytes;
 
   final picker = ImagePicker();
-
-  @override
-  void initState() {
-    super.initState();
-    ownerIdController.text = '675242673054e416f8cb0194'; 
-  }
 
   Future<void> _pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -59,7 +52,6 @@ class _AddDogScreenState extends State<AddDogScreen> {
         'weight': double.tryParse(weightController.text) ?? 0.0,
         'distance': distanceController.text,
         'description': descriptionController.text,
-        'ownerId': ownerIdController.text, 
       };
 
       try {
@@ -81,7 +73,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add a Dog"),
-        backgroundColor: Color(0xFF80C4E9), 
+        backgroundColor: Color(0xFF80C4E9),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -97,39 +89,35 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     labelText: "Name",
                     prefixIcon: Icon(Icons.pets, color: Colors.brown),
                     filled: true,
-                    fillColor: Colors.brown[50],  
+                    fillColor: Colors.brown[50],
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1),
-                    ),
+                    border: OutlineInputBorder(),
                   ),
                   validator: (value) => value!.isEmpty ? "Enter a name" : null,
                 ),
                 SizedBox(height: 10),
 
-                
+                // Age du chien
                 TextFormField(
                   controller: ageController,
                   decoration: InputDecoration(
                     labelText: "Age",
                     prefixIcon: Icon(Icons.calendar_today, color: Colors.brown),
                     filled: true,
-                    fillColor: Colors.brown[50],  // Fond brun
+                    fillColor: Colors.brown[50],
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1), 
-                    ),
+                    border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.number,
                   validator: (value) => value!.isEmpty ? "Enter age" : null,
                 ),
                 SizedBox(height: 10),
 
-               
+                // Genre
                 TextFormField(
                   controller: genderController,
                   decoration: InputDecoration(
@@ -140,14 +128,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1),
-                    ),
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) => value!.isEmpty ? "Enter gender" : null,
                 ),
                 SizedBox(height: 10),
 
-               
+                // Couleur
                 TextFormField(
                   controller: colorController,
                   decoration: InputDecoration(
@@ -158,14 +145,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1),
-                    ),
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) => value!.isEmpty ? "Enter color" : null,
                 ),
                 SizedBox(height: 10),
 
-          
+                // Poids
                 TextFormField(
                   controller: weightController,
                   decoration: InputDecoration(
@@ -176,15 +162,14 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1), 
-                    ),
+                    border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.number,
+                  validator: (value) => value!.isEmpty ? "Enter weight" : null,
                 ),
                 SizedBox(height: 10),
 
-                
+                // Distance
                 TextFormField(
                   controller: distanceController,
                   decoration: InputDecoration(
@@ -195,14 +180,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1), 
-                    ),
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) => value!.isEmpty ? "Enter distance" : null,
                 ),
                 SizedBox(height: 10),
 
-               
+                // Description
                 TextFormField(
                   controller: descriptionController,
                   decoration: InputDecoration(
@@ -213,15 +197,15 @@ class _AddDogScreenState extends State<AddDogScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF80C4E9), width: 2),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown, width: 1), 
-                    ),
+                    border: OutlineInputBorder(),
                   ),
                   maxLines: 3,
+                  validator: (value) =>
+                      value!.isEmpty ? "Enter a description" : null,
                 ),
                 SizedBox(height: 10),
 
-                
+                // Image picker
                 GestureDetector(
                   onTap: _pickImage,
                   child: _webImageBytes != null || _selectedImage != null
@@ -247,7 +231,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                 ),
                 SizedBox(height: 20),
 
-              
+                // Bouton de soumission
                 ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(

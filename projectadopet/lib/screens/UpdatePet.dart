@@ -53,7 +53,6 @@ class _EditPetPageState extends State<EditPetPage> {
         distance = dog.distance;
         description = dog.description;
         imagePath = dog.imagePath;
-        ownerId = dog.ownerId;
         _imageUrl = dog.imagePath;
         _nameController.text = dog.name;
         _ageController.text = dog.age.toString();
@@ -107,7 +106,6 @@ class _EditPetPageState extends State<EditPetPage> {
         'distance': _distanceController.text,
         'description': _descriptionController.text,
         'imagePath': imagePath,
-        'ownerId': ownerId,
       };
 
       await ApiService.updateDog(

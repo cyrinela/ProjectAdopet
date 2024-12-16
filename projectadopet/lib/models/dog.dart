@@ -8,7 +8,6 @@ class Dog {
   final String distance;
   final String description;
   final String imagePath;
-  final String ownerId;
 
   Dog({
     required this.id,
@@ -19,8 +18,7 @@ class Dog {
     required this.weight,
     required this.distance,
     required this.description,
-    required this.imagePath,
-    required this.ownerId,
+    required this.imagePath
   });
 
   // Convertir les données du chien en JSON
@@ -34,8 +32,7 @@ class Dog {
       'weight': weight,
       'distance': distance,
       'description': description,
-      'imagePath': imagePath,
-      'ownerId': ownerId,
+      'imagePath': imagePath
     };
   }
 
@@ -50,8 +47,7 @@ class Dog {
       weight: json['weight'] ?? 0.0,
       distance: json['distance'] ?? '',
       description: json['description'] ?? '',
-      imagePath: json['imagePath'] ?? '',
-      ownerId: json['ownerId'] ?? '',
+      imagePath: json['imagePath'] ?? ''
     );
   }
 }

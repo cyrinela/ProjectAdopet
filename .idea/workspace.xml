@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53aa0bcc-aef6-4a11-99f8-df6c2e6ad8c3" name="Changes" comment="" />
+    <list default="true" id="53aa0bcc-aef6-4a11-99f8-df6c2e6ad8c3" name="Changes" comment="Merge branch 'version2' of https://github.com/cyrinela/ProjectAdopet into version2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,18 +40,26 @@
   "keyToString": {
     "Dart Command Line App.main.dart.executor": "Run",
     "Flutter.main.dart.executor": "Run",
+    "Node.js.adopetRoutes.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "version1",
+    "git-widget-placeholder": "version2",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cyrin/EduShareMobile",
+    "last_opened_file_path": "C:/Users/cyrin/ccccccc/ProjectAdopet-version2/nodeProject",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "dart.settings",
-    "show.migrate.to.gradle.popup": "false"
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -59,7 +67,37 @@
       <recent name="C:\Users\cyrin\Desktop\At Cross Plat\ProjectAdopet\projectadopet\lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.main.dart">
+  <component name="RunManager">
+    <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
+      <option name="appName" />
+      <option name="appServicePlanName" />
+      <option name="appServicePlanResourceGroup" />
+      <option name="appSettingsKey" value="691eb193-c017-4b32-a08b-8a24b6bd0142" />
+      <option name="artifact" />
+      <option name="debugOptions" />
+      <option name="deployment" />
+      <option name="deploymentStagingDirectoryPath" />
+      <option name="funcPath" />
+      <option name="functionHostArguments" />
+      <option name="hostJsonPath" />
+      <option name="insightsName" />
+      <option name="instrumentationKey" />
+      <option name="javaVersion" />
+      <option name="localSettingsJsonPath" />
+      <option name="moduleName" />
+      <option name="os" />
+      <option name="pricingTier" />
+      <option name="providerMap">
+        <map />
+      </option>
+      <option name="region" />
+      <option name="resourceGroup" />
+      <option name="stagingFolder" />
+      <option name="subscription" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="main.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/projectadopet/lib/main.dart" />
       <option name="workingDirectory" value="$PROJECT_DIR$/projectadopet" />
@@ -69,12 +107,6 @@
       <option name="filePath" value="$PROJECT_DIR$/projectadopet/lib/main.dart" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Flutter.main.dart" />
-        <item itemvalue="Dart Command Line App.main.dart" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -84,7 +116,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1731757788317</updated>
+      <workItem from="1734146128546" duration="599000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'version2' of https://github.com/cyrinela/ProjectAdopet into version2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'version2' of https://github.com/cyrinela/ProjectAdopet into version2" />
   </component>
 </project>
